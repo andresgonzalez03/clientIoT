@@ -44,4 +44,7 @@ public class ThingIoT {
         TopicIoT topic= new TopicIoT(TOPIC, TOPIC_QOS);
         awsIotClient.subscribe(topic, true);
     }
-}
+    public void publish() throws AWSIotException {
+        
+    }
+ }
