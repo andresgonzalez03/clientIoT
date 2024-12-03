@@ -1,6 +1,9 @@
 package iticbcn.clientjava;
 
+import java.sql.*;
+
 import com.amazonaws.services.iot.client.AWSIotException;
+import com.amazonaws.services.iot.client.AWSIotMessage;
 import com.amazonaws.services.iot.client.AWSIotMqttClient;
 import com.amazonaws.services.iot.client.AWSIotQos;
 import com.amazonaws.services.iot.client.sample.sampleUtil.SampleUtil;
@@ -44,7 +47,38 @@ public class ThingIoT {
         TopicIoT topic= new TopicIoT(TOPIC, TOPIC_QOS);
         awsIotClient.subscribe(topic, true);
     }
-    public void publish() throws AWSIotException {
-        
+    public static void publish(String uid) throws AWSIotException {
+        String key = "nombre";
+        String value = isValidUid(uid) ? "1" : "0";
+        String jsonMessage = String.format("{\"%s\":\"%s\"}", key, value);
+        try {
+            AWSIotMessage iotMessage = new AWSIotMessage(TOPIC, AWSIotQos.QOS0);
+            iotMessage.setStringPayload(jsonMessage);
+            awsIotClient.publish(iotMessage);
+        } catch (AWSIotException e) {
+            System.err.println("Error al publicar el mensaje: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Error inesperado: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
- }
+    private static boolean isValidUid(String uid) {
+        if (uid == null || uid.isEmpty()) {
+            return false;
+        }
+        try (Connection conn = DriverManager.getConnection("jdbc:postgresql://192.168.33.8/prova", "andres", "123")) {
+            String query = "SELECT COUNT(*) FROM usuarios WHERE uid = '" + uid + "'"; 
+            try (Statement st = conn.createStatement()) {
+                try (ResultSet rs = st.executeQuery(query)) {
+                    if (rs.next()) {
+                        return rs.getInt(1) > 0;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); 
+        }
+        return false;
+    }
+}

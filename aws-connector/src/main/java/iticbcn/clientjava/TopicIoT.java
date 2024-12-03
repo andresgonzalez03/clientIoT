@@ -11,6 +11,17 @@ public class TopicIoT  extends AWSIotTopic {
 
     @Override
     public void onMessage(AWSIotMessage message) {
-        System.out.println(System.currentTimeMillis() + ": <<< " + message.getStringPayload());
+        try {
+            String payload = message.getStringPayload();
+            System.out.println(System.currentTimeMillis() + ": <<< " + message.getStringPayload());
+            String uid = payload.replaceAll("[{}\" ]", "").split(":")[1];
+            if (uid != null && !uid.isEmpty()) {
+                ThingIoT.publish(uid); 
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error al procesar el mensaje: " + e.getMessage());
+        }
     }
 }

@@ -15,7 +15,6 @@ public class ClientIoT {
         try {
             thing.conecta();
             thing.subscriu();
-
             try (Connection con = ConnDB.getConnection(url, user, password)) {
                 AccessDB access = new AccessDB();
 
