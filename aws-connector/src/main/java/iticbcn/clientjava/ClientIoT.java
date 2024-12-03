@@ -17,9 +17,7 @@ public class ClientIoT {
             thing.subscriu();
             try (Connection con = ConnDB.getConnection(url, user, password)) {
                 AccessDB access = new AccessDB();
-
                 access.selectAlumnes(con);
-
                 AWSIotMessage message = new AWSIotMessage("arduino/reader/uid", AWSIotQos.QOS0, "Mensaje de prueba");
                 access.insertMessage(con, message);
             } catch (SQLException e) {

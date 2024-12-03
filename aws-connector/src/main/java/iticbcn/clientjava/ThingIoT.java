@@ -48,7 +48,7 @@ public class ThingIoT {
         awsIotClient.subscribe(topic, true);
     }
     public static void publish(String uid) throws AWSIotException {
-        String key = "nombre";
+        String key = "status";
         String value = isValidUid(uid) ? "1" : "0";
         String jsonMessage = String.format("{\"%s\":\"%s\"}", key, value);
         try {
