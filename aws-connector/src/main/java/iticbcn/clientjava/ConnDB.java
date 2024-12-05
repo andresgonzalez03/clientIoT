@@ -1,6 +1,6 @@
 package iticbcn.clientjava;
 
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
@@ -8,7 +8,10 @@ import java.util.Properties;
 public class ConnDB {
     public static Connection getConnection() throws SQLException {
         Properties properties = new Properties();
-        try (FileInputStream input = new FileInputStream("/home/this_andres/AWSJava/aws-connector/src/main/resources/config.properties")) {
+        try (InputStream input = ConnDB.class.getClassLoader().getResourceAsStream("config.properties")) {
+            if(input == null) {
+                throw new SQLException("No se pudo encontrar el archivo config.properties en resources");
+            }
             properties.load(input);
         } catch (IOException e) {
             e.printStackTrace();
