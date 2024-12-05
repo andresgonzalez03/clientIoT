@@ -1,34 +1,25 @@
 package iticbcn.clientjava;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
+import java.util.Properties;
 
 public class ConnDB {
-    private String connection;
-    private String user;
-    private String password;
-
-    public ConnDB(String connection, String user, String password) {
-        this.connection = connection;
-        this.user = user;
-        this.password = password;
-    }
-    public String getConnection() {
-        return connection;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public String getUser() {
-        return user;
-    }
-    public static Connection getConnection(String urlConn, String name, String pass) throws SQLException {
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(urlConn, name, pass);
-            return conn;
-        } catch (SQLException e) {
-            throw new SQLException("Error al establecer la conexión a la base de datos", e);
+    public static Connection getConnection() throws SQLException {
+        Properties properties = new Properties();
+        try (FileInputStream input = new FileInputStream("config.properties")) {
+            properties.load(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new SQLException("No se pudo cargar el archivo de configuración", e);
         }
+        String url = properties.getProperty("db.url");
+        String username = properties.getProperty("db.username");
+        String password = properties.getProperty("db.password");
+        if (url == null || username == null || password == null) {
+            throw new SQLException("Faltan propiedades en el archivo de configuración.");
+        }
+        return DriverManager.getConnection(url, username, password);
     }
-
 }
