@@ -8,7 +8,7 @@ import java.util.Properties;
 public class ConnDB {
     public static Connection getConnection() throws SQLException {
         Properties properties = new Properties();
-        try (FileInputStream input = new FileInputStream("config.properties")) {
+        try (FileInputStream input = new FileInputStream("/home/this_andres/AWSJava/aws-connector/src/main/resources/config.properties")) {
             properties.load(input);
         } catch (IOException e) {
             e.printStackTrace();
