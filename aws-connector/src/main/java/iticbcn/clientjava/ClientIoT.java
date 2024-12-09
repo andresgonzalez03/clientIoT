@@ -4,10 +4,6 @@ import java.sql.*;
 import com.amazonaws.services.iot.client.AWSIotException;
 
 public class ClientIoT {
-    static final String url = "jdbc:postgresql://192.168.33.8/prova";
-    static final String user = "andres";
-    static final String password = "123";
-
     public static void main(String[] args) {
         ThingIoT thing = new ThingIoT();
         try {

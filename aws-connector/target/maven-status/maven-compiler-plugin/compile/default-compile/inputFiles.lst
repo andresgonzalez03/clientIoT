@@ -1,5 +1,5 @@
-/home/this_andres/AWSJava/aws-connector/src/main/java/iticbcn/clientjava/ThingIoT.java
-/home/this_andres/AWSJava/aws-connector/src/main/java/iticbcn/clientjava/ClientIoT.java
-/home/this_andres/AWSJava/aws-connector/src/main/java/iticbcn/clientjava/TopicIoT.java
-/home/this_andres/AWSJava/aws-connector/src/main/java/iticbcn/clientjava/ConnDB.java
-/home/this_andres/AWSJava/aws-connector/src/main/java/iticbcn/clientjava/AccessDB.java
+/home/isard/clientIoT/aws-connector/src/main/java/iticbcn/clientjava/TopicIoT.java
+/home/isard/clientIoT/aws-connector/src/main/java/iticbcn/clientjava/AccessDB.java
+/home/isard/clientIoT/aws-connector/src/main/java/iticbcn/clientjava/ClientIoT.java
+/home/isard/clientIoT/aws-connector/src/main/java/iticbcn/clientjava/ThingIoT.java
+/home/isard/clientIoT/aws-connector/src/main/java/iticbcn/clientjava/ConnDB.java
