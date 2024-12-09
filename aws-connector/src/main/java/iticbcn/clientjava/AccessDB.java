@@ -20,40 +20,45 @@ public class AccessDB {
 
     public static boolean insertMessage(String idTargeta) {
         boolean success = false;
-        int userId = -1;
-        String userRole = null; 
-        String queryCheck = "SELECT id, rol FROM usuaris WHERE id_targeta = '" + idTargeta + "'";
+        String userId = null;
+        String userRole = null;
+        String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        
+        // Consulta para buscar al usuario por id_targeta
+        String queryCheck = "SELECT nuid, rol FROM usuari WHERE nuid = '" + idTargeta + "'";
     
         try (Connection con = ConnDB.getConnection();
              Statement stmt = con.createStatement()) {
+    
+            // Ejecuta la consulta para obtener datos del usuario
             ResultSet rs = stmt.executeQuery(queryCheck);
             if (rs.next()) {
-                userId = rs.getInt("id");
+                userId = rs.getString("nuid");
                 userRole = rs.getString("rol");
             }
-            if (userId != -1) {
-                String queryInsert = null;
+    
+            if (userId != null) {
+                String queryInsert;
+                
+                // Determina si es un alumno o un profesor y construye la consulta correspondiente
                 if ("alumne".equalsIgnoreCase(userRole)) {
-                    queryInsert = "INSERT INTO assistencia (alumne_id, data, estat) VALUES (" +
-                            userId + ", '" +
-                            LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) +
-                            "', 'present')";
+                    queryInsert = "INSERT INTO assistencia (alumne_id, data, estat) VALUES ('" +
+                            userId + "', '" +
+                            currentTime + "', 'present')";
                 } else if ("professor".equalsIgnoreCase(userRole)) {
-                    queryInsert = "INSERT INTO assistencia (professor_id, data, estat) VALUES (" +
-                            userId + ", '" +
-                            LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) +
-                            "', 'present')";
-                }
-                if (queryInsert != null) {
-                    int rowsAffected = stmt.executeUpdate(queryInsert);
-                    if (rowsAffected > 0) {
-                        System.out.println("Asistencia registrada correctamente para " + userRole + " con ID: " + userId);
-                        success = true;
-                    } else {
-                        System.out.println("No se pudo registrar la asistencia.");
-                    }
+                    queryInsert = "INSERT INTO assistencia (professor_id, data, estat) VALUES ('" +
+                            userId + "', '" +
+                            currentTime + "', 'present')";
                 } else {
                     System.out.println("Rol desconocido para el usuario con ID: " + userId);
+                    return false;
+                }
+                int rowsAffected = stmt.executeUpdate(queryInsert);
+                if (rowsAffected > 0) {
+                    System.out.println("Asistencia registrada correctamente para " + userRole + " con ID: " + userId);
+                    success = true;
+                } else {
+                    System.out.println("No se pudo registrar la asistencia.");
                 }
             } else {
                 System.out.println("No se encontró un usuario asociado al ID de tarjeta: " + idTargeta);
@@ -63,7 +68,6 @@ public class AccessDB {
             e.printStackTrace();
             System.err.println("Error al ejecutar la consulta: " + e.getMessage());
         }
-    
         return success;
-    }
+    }    
 }    
