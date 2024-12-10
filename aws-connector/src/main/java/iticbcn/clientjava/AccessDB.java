@@ -22,15 +22,12 @@ public class AccessDB {
         boolean success = false;
         String userId = null;
         String userRole = null;
-        String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
         
-        // Consulta para buscar al usuario por id_targeta
         String queryCheck = "SELECT nuid, rol FROM usuari WHERE nuid = '" + idTargeta + "'";
     
         try (Connection con = ConnDB.getConnection();
              Statement stmt = con.createStatement()) {
-    
-            // Ejecuta la consulta para obtener datos del usuario
             ResultSet rs = stmt.executeQuery(queryCheck);
             if (rs.next()) {
                 userId = rs.getString("nuid");
@@ -39,8 +36,7 @@ public class AccessDB {
     
             if (userId != null) {
                 String queryInsert;
-                
-                // Determina si es un alumno o un profesor y construye la consulta correspondiente
+
                 if ("alumne".equalsIgnoreCase(userRole)) {
                     queryInsert = "INSERT INTO assistencia (alumne_id, data, estat) VALUES ('" +
                             userId + "', '" +

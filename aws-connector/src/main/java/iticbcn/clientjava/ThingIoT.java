@@ -9,9 +9,9 @@ import com.amazonaws.services.iot.client.sample.sampleUtil.SampleUtil;
 import com.amazonaws.services.iot.client.sample.sampleUtil.SampleUtil.KeyStorePasswordPair;
 
 public class ThingIoT {
-    private static final String FICH_CLAU_PUBLICA = "./certificates/Aws-IoT-DEVICE2_PUBLIC.key";
-    private static final String FICH_CLAU_PRIVADA = "./certificates/Aws-IoT-DEVICE2_PRIV.key";
-    private static final String FICH_CERT_DISP_IOT = "./certificates/Aws-IoT-DEVICE2_DC.crt";
+    private static final String FICH_CLAU_PUBLICA = "aws-connector/certificates/Aws-IoT-DEVICE2_PUBLIC.key";
+    private static final String FICH_CLAU_PRIVADA = "aws-connector/certificates/Aws-IoT-DEVICE2_PRIV.key";
+    private static final String FICH_CERT_DISP_IOT = "aws-connector/certificates/Aws-IoT-DEVICE2_DC.crt";
     private static final String ENDPOINT = "a302ucw63g5l7h-ats.iot.us-east-1.amazonaws.com";
     public static final String TOPIC_UID = "esp32/sub";
     public static final String TOPIC_RESPONSE = "arduino/reader/uid";
