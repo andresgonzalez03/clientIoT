@@ -5,19 +5,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class AccessDB {
-    public void selectAlumnes(Connection conn) {
-        String query = "SELECT id, nom FROM usuari"; 
-        try (Statement st = conn.createStatement(); ResultSet rs = st.executeQuery(query)) {
-            while (rs.next()) { 
-                int id = rs.getInt("id");
-                String name = rs.getString("nom");
-                System.out.println("ID: " + id + "\nName: " + name);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al realizar la consulta: " + e.getMessage());
-        }
-    }
-
     public static boolean insertMessage(String idTargeta) {
         boolean success = false;
         String userId = null;
