@@ -36,7 +36,7 @@ public class ThingIoT {
             awsIotClient = new AWSIotMqttClient(cliEP, cliId, pair.keyStore, pair.keyPassword);
         }
         if (awsIotClient == null) {
-            throw new IllegalArgumentException("Error al construir client amb el certificat o les credencials.");
+            throw new IllegalArgumentException("Error al construir client con el certificado o las credenciales.");
         }
     }
     public void conecta() throws AWSIotException{

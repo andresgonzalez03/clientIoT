@@ -16,7 +16,6 @@ public class TopicIoT  extends AWSIotTopic {
         try {
             String payload = message.getStringPayload();
             System.out.println("Mensaje recibido: " + payload);
-            System.out.println(System.currentTimeMillis() + ": <<< " + payload);
             JSONObject json = new JSONObject(payload);
             String uid = json.optString("cardUID");
             System.out.println("UID: " + uid);
